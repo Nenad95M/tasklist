@@ -16,15 +16,17 @@ function loadEventListeners(){
     taskList.addEventListener('click', removeTask);  
     //osluskivac dogadjaja koji se poziva na click, pokrece callback funkcija clearTasks, koja uklanja sve zadatke
     clearBtn.addEventListener('click', clearTasks);
-    //filter za kucanje
+    //filter za kucanje, pokrece se na svako pustanje dugmeta, filterTasks treba da filtrira pretragu
     filter.addEventListener('keyup', filterTasks)
 }
 //Funkcija dodaje zadatak
-function addTask(e){
-    //ako je prazan, kaze da se doda
+function addTask(e){ //parametar je e, sto je skracenica od event
+    //if proverava da li je vrednost inputa prazna, ako jeste kaze da se doda zadatak
     if(taskInput.value===''){
-        alert('Add a taks');
+        alert('Upišite zadatak, ništa nije upisano');
+        return; //prekida funkciju tokom izvrsavanja, i sprecava da se napravi prazan li element
     }
+    //kreira se html element li i a...
     //dodaje li element u html-u
     const li=document.createElement('li');
     //dodaje klasu collection-item
@@ -44,7 +46,7 @@ function addTask(e){
 //kada dodamo, ovo treba da isprazni sadrzaj
     taskInput.value=''; 
 
-//sprecavamo refresovanje sajta
+//sprecavamo refresovanje sajta kada se ide na submit
     e.preventDefault(e);
 }
 
@@ -52,7 +54,7 @@ function addTask(e){
 function removeTask(e){
     //dodajemo if proveru, da bi se targetirao samo iskic za brisanje
     if(e.target.parentElement.classList.contains('delete-item')){
-        if(confirm("Da li ste sigurni")){
+        if(confirm("Da li ste sigurni")){ //predifinisana funkcija koja izbacuje alert koji ima logicku da i ne
       e.target.parentElement.parentElement.remove();
     }
 }} 
