@@ -1,20 +1,20 @@
-//define UI Vars
+//promenjive iz DOM-a
 const form=document.querySelector('#task-form');
 const taskList=document.querySelector('.collection');
 const clearBtn=document.querySelector('.clear-tasks');
 const filter=document.querySelector('#filter');
 const taskInput=document.querySelector('#task')
 
-//Load all event listeners
+//Poziva se funkcija koja pokrece osluskivace dogadjaja
 loadEventListeners();
 
 //definise event listere
 function loadEventListeners(){ 
-    //dodaje osluskivac addTask
+    //dodaje osluskivac za submit, koji pokrece callback funkciju addTask
     form.addEventListener('submit', addTask);
-    //  Osluskivac dogadjaja za uklanjanje zadatka
-    taskList.addEventListener('click', removeTask); 
-    //osluskivac dogadjaja na dugme za brisanje
+    //  Osluskivac dogadjaja za uklanjanje zadatka, aktivira se na click, pokrece removeTask calback funkciju
+    taskList.addEventListener('click', removeTask);  
+    //osluskivac dogadjaja koji se poziva na click, pokrece callback funkcija clearTasks, koja uklanja sve zadatke
     clearBtn.addEventListener('click', clearTasks);
     //filter za kucanje
     filter.addEventListener('keyup', filterTasks)
