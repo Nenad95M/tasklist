@@ -43,11 +43,31 @@ function addTask(e){ //parametar je e, sto je skracenica od event
     li.appendChild(link);
     //dodaje dete
     taskList.appendChild(li);
+
+//poziva se funkcija koja dodaje upisani zadatak u Local Storage
+storeTaskInLocalStorage(taskInput.value); //uzima vrednost iz inputa i prosledjuje je funkciji kao argument
+
 //kada dodamo, ovo treba da isprazni sadrzaj
     taskInput.value=''; 
 
 //sprecavamo refresovanje sajta kada se ide na submit
     e.preventDefault(e);
+}
+
+//funkcija koja cuva uneti zadatak u Local Storage
+function storeTaskInLocalStorage(task){
+    let tasks;
+    if(localStorage.getItem('tasks')===null){ //ako nema nista u storidzu
+     tasks=[]; //pravi se prazan niz, u koji se smestaju zadaci
+    }
+    else { //ako local storage nije prazan
+        tasks=JSON.parse(localStorage.getItem('tasks')); // promenjivoj tasks se dodeljuje json pretvoren u objekat
+    }
+    tasks.push(task); //nizu tasks u koji se smestaju zadaci se dodaje vrednost iz inputa (zadatak) koja je funkciji prosledjena kao argument,
+    //sada postoji niz sa zadacima, to su zadaci pokupljeni iz storidza + zadatak koji smo uneli
+    //nakon toga, potrebno je upisati zadatak u storidz
+    localStorage.setItem('tasks', JSON.stringify(tasks));// pristupa se localstoridzu, prosledjuje se naziv niza i prosledjuje mu se niz tasks pretvoren u string
+
 }
 
 //Funkcija koja brise zadatak
@@ -73,7 +93,7 @@ function filterTasks(e){
     const text=e.target.value.toLowerCase(); //sve prebacuje u mala slova radi uporedjivanja striga
 
  document.querySelectorAll('.collection-item').forEach( //prolazi kroz sve html elemente sa klasom .collection-item
-     function(task){ //parametar je task
+     function(task){ //parametar je task, odnosno svaki lupovani element html-a u kome se nalazi upisani zadatak
          const item=task.firstChild.textContent; //smesta u item konstantu sadrzaj prvog deteta
          if(item.toLowerCase().indexOf(text)!=-1){ //ako je indeks clana niza nije -1 odnosno ne postoji u nizu
         task.style.display='block'; //prikazuje ga u html-u jer je block prikazan
